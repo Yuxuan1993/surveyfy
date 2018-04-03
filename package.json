@@ -1,0 +1,32 @@
+{
+  "name": "surveyfy",
+  "version": "1.0.0",
+  "description": "A Survey Web App",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beavinash/surveyfy.git"
+  },
+  "author": "Avinash Reddy",
+  "dependencies": {
+    "async": "~0.2.8",
+    "ejs": "^2.5.8",
+    "express": "^3.2.6",
+    "nodemon": "^1.17.3",
+    "socket.io": "~0.9.14"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "Survey",
+    "App"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beavinash/surveyfy/issues"
+  },
+  "homepage": "https://github.com/beavinash/surveyfy#readme"
+}
