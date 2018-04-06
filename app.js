@@ -1,6 +1,14 @@
-var express = require("express")
-var app = express()
-var bodyParser = require("body-parser")
+var express         = require("express"),
+    app             = express(),
+    bodyParser      = require("body-parser"),
+    mongoose        = require("mongoose"),
+    Survey          = require("./models/survey"), 
+    seedDB          = require("./seeds")
+
+// Setting and Connecting Database
+mongoose.connect("mongodb://localhost/surveyfy_db")
+
+seedDB()
 
 // Setting up ejs folder access
 app.set("view engine", "ejs")
@@ -11,45 +19,76 @@ app.use(bodyParser.urlencoded({extended: true}))
 // Setting public directory
 app.use(express.static(__dirname + "/public"));
 
-// Array data
-var surveys = [
-            {name: "Survey 1", description: "Description of Survey 1"},
-            {name: "Survey 2", description: "Description of Survey 2"},
-            {name: "Survey 3", description: "Description of Survey 3"},
-        ]
+
 
 // Routes
 
-// Route for Index page
+// Index - Route for Index page
 app.get("/", function(req, res) {
-    res.render("index", {surveys: surveys})
+    // Get all features surveys from database
+    Survey.find({}, function(error, allSurveys) {
+        if (error) {
+            console.log(error)
+        } else {
+            res.render("home", {surveys: allSurveys})
+        }
+    })
 })
 
-// Route for Surveys
+// Display - Route for Surveys
 app.get("/surveys", function(req, res) {
-        
-    res.render("surveys", {surveys: surveys})
+    // Get all surveys from database
+    Survey.find({}, function(error, allSurveys) {
+        if (error) {
+            console.log(error)
+        } else {
+            res.render("index", {surveys: allSurveys})
+        }
+    })
+    
 })
 
-// Route for Creating Surveys
+// Create - Route for Creating Surveys
 app.post("/surveys", function(req, res) {
     var name = req.body.name
     var description = req.body.description
     var newSurvey = {name: name, description: description}
     
-    surveys.push(newSurvey)
-    res.redirect("/surveys")
+    // Create a new survey and save
+    Survey.create(newSurvey, function(error, newSurveyCreated) {
+        if (error) {
+            console.log(error)
+        } else {
+            // redirecting to surveys
+            res.redirect("/surveys")
+        }
+    })
+    
 })
 
-// Route for Survey form
+// Survey Form - Route for Survey form
 app.get("/surveys/new", function(req, res) {
     res.render("new")
 })
 
-// Route for About
+// Show Survey - Route for displaying a individual Survey
+app.get("/surveys/:id", function(req, res) {
+    Survey.findById(req.params.id).populate("questions").exec( function(error, foundSurvey) {
+        if (error) {
+            console.log(error)
+        } else {
+            res.render("show", {survey: foundSurvey})
+        }
+    })
+    
+})
+
+// About - Route for About
 app.get("/about", function(req, res) {
     res.render("about")
 })
+
+
 
 
 

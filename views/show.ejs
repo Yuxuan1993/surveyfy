@@ -1,0 +1,15 @@
+<% include partials/header %>
+
+<h1><%= survey.name %></h1>
+<p><%= survey.description %></p>
+
+<% survey.questions.forEach(function(question) { %>
+    <p>
+        <strong>
+            <%= question.author %>  
+        </strong>
+        - <%= question.text %>
+    </p>
+<% }) %>
+
+<% include partials/footer %>
