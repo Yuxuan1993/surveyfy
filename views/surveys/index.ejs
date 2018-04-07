@@ -1,4 +1,5 @@
-<% include partials/header %>
+<% include ../partials/header %>
+
 
 <div class="container">
      <header class="jumbotron">
@@ -21,7 +22,7 @@
                             <h3><%= survey.name %></h3>
                             <h4><%= survey.description %></h4>
                             <p>
-                                <a href="/surveys/<%= survey._id %>" class="btn btn-primary">More Info</a>
+                                <a href="/surveys/<%= survey._id %>" class="btn btn-secondary">More Info</a>
                             </p>
                         </div>
                     </div>
@@ -38,4 +39,4 @@
     </div>
 </div>
 
-<% include partials/footer %>
+<% include ../partials/footer %>

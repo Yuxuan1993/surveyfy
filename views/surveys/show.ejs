@@ -1,0 +1,40 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="card card-body mb-2">
+        <h1><%= survey.name %></h1>
+        <p><%= survey.description %></p>
+        
+    </div>
+    
+    <br></br>
+        <div class="card card-body bg-light">
+            
+                <p><a class="btn btn-primary float-right" href="/surveys/<%= survey._id %>/questions/new">Add Question</a></p>
+            
+            
+            
+            <br></br>
+            <% survey.questions.forEach(function(question) { %>
+                <div class="row">
+                    <p>
+                        <strong>
+                            <%= question.author %>  
+                        </strong>
+                        - <%= question.text %>
+                    </p>
+                </div>
+                
+                
+            <% }) %>
+        </div>
+        
+    
+</div>
+
+
+
+
+
+
+<% include ../partials/footer %>

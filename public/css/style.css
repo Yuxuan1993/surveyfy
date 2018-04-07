@@ -12,3 +12,7 @@ main {
     flex: 1 0 auto;
       
   }
+  
+ #btnRightSpacing {
+     margin-right: 1em;
+ }
