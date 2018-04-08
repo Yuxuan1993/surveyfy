@@ -21,37 +21,37 @@ var data = [
 function seedDB() {
     // REMOVE - Surveys
     Survey.remove({}, function(err) {
-        if (err) {
-            console.log(err)
-        }
-        console.log("Removed all surveys successfully.")
-        // ADD - Surveys
-        data.forEach(function(seed){
-            Survey.create(seed, function(err, survey){
-                if(err){
-                    console.log(err)
-                } else {
-                    console.log("added a survey");
+        // if (err) {
+        //     console.log(err)
+        // }
+        // console.log("Removed all surveys successfully.")
+        // // ADD - Surveys
+        // data.forEach(function(seed){
+        //     Survey.create(seed, function(err, survey){
+        //         if(err){
+        //             console.log(err)
+        //         } else {
+        //             console.log("added a survey");
                     
-                    // ADD - Question
-                    Question.create({
-                        text: "This is a Question 1",
-                        author: "Avinash"
-                    }, function(err, question) {
-                        if (err) {
-                            console.log(err)
-                        } else {
-                            survey.questions.push(question)
-                            survey.save()
-                            console.log("Created new question")
-                        }
+        //             // ADD - Question
+        //             Question.create({
+        //                 text: "This is a Question 1",
+        //                 author: "Avinash"
+        //             }, function(err, question) {
+        //                 if (err) {
+        //                     console.log(err)
+        //                 } else {
+        //                     survey.questions.push(question)
+        //                     survey.save()
+        //                     console.log("Created new question")
+        //                 }
                         
-                    })
-                }
+        //             })
+        //         }
                 
-            })
+        //     })
                 
-        })
+        // })
     })
     
     
