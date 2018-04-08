@@ -67,20 +67,15 @@ router.get("/:id", isLoggedIn, function(req, res) {
 })
 
 // EDIT - Survey Edit Route
-router.get("/:id/edit", function(req, res) {
+router.get("/:id/edit", checkSurveyOwnership, function(req, res) {
+
     Survey.findById(req.params.id, function(err, foundSurvey) {
-        if (err) {
-            console.log(err)
-            res.redirect("/surveys")
-        } else {
-            res.render("surveys/edit", {survey: foundSurvey})
-        }
+        res.render("surveys/edit", {survey: foundSurvey})
     })
-    
 })
 
 // UPDATE - Survey Update Route
-router.put("/:id", function(req, res) {
+router.put("/:id", checkSurveyOwnership, function(req, res) {
     // find and update survey
     
     Survey.findByIdAndUpdate(req.params.id, req.body.survey, function(err, updatedSurvey){
@@ -94,7 +89,7 @@ router.put("/:id", function(req, res) {
 })
 
 // DELETE - Survye Delete Route
-router.delete("/:id", function(req, res) {
+router.delete("/:id", checkSurveyOwnership, function(req, res) {
     Survey.findByIdAndRemove(req.params.id, function(err) {
         if (err) {
             console.log(err)
@@ -104,6 +99,35 @@ router.delete("/:id", function(req, res) {
         }
     })
 })
+
+// Middleware for checking survye ownership
+function checkSurveyOwnership(req, res, next) {
+    if (req.isAuthenticated()) {
+        Survey.findById(req.params.id, function(err, foundSurvey) {
+        
+            if (err) {
+                console.log(err)
+                res.redirect("back")
+            }
+            else {
+                if(foundSurvey.author.id.equals(req.user._id)) {
+                    next() // moves and links to update or delete 
+                } else {
+                    
+                    res.redirect("back")
+                }
+                
+            }
+            
+                    
+            
+            
+        })
+    } else {
+        console.log("You need to be logged in!")
+        res.redirect("back")
+    }
+}
 
 // Middleware
 
