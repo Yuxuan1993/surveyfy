@@ -5,6 +5,10 @@
         <h1><%= survey.name %></h1>
         <p><%= survey.description %></p>
         <p><em>Created by - <%= survey.author.firstName %></em></p>
+        <p><a class="btn btn-primary float-right" href="/surveys/<%= survey._id %>/edit">Edit Survey</a></p>
+        <form id="delete-inline" action="/surveys/<%= survey._id %>?_method=DELETE" method="post">
+            <button class="btn btn-danger float-right">Delete</button>
+        </form>
     </div>
     
     <br></br>

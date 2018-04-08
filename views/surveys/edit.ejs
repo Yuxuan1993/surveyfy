@@ -1,0 +1,25 @@
+<% include ../partials/header %>
+<div class="row">
+  <div class="col-md-6 mx-auto">
+    <div class="card card-body">
+      <h3 class="text-left text-uppercase">Edit <%=survey.name%></h3>
+      <br></br>
+      <form action="/surveys/<%= survey._id %>?_method=PUT" method="post">
+        <div class="form-group">
+          <label for="name">Survey Title</label>
+          <input type="text" class="form-control" name="survey[name]" value="<%= survey.name %>" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Survey Description</label> <br></br>
+          <textarea class="form-control" name="survey[description]" rows="5" required><%= survey.description %></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-primary float-right">Edit</button>
+        
+        <a class="btn btn-secondary float-left" href="/surveys">Go Back</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+<% include ../partials/footer %>

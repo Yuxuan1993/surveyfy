@@ -4,6 +4,7 @@ var express         = require("express"),
     mongoose        = require("mongoose"),
     passport        = require("passport"),
     LocalStrategy   = require("passport-local"),
+    methodOverride  = require("method-override"),
     User            = require("./models/user"),
     Survey          = require("./models/survey"),
     Question        = require("./models/question"),
@@ -29,6 +30,9 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 // Setting public directory
 app.use(express.static(__dirname + "/public"));
+
+// Setting method override for EDIT and UPDATE
+app.use(methodOverride("_method"))
 
 // Passport configuration for the web app
 app.use(require("express-session")({

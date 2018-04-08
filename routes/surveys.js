@@ -66,6 +66,45 @@ router.get("/:id", isLoggedIn, function(req, res) {
     
 })
 
+// EDIT - Survey Edit Route
+router.get("/:id/edit", function(req, res) {
+    Survey.findById(req.params.id, function(err, foundSurvey) {
+        if (err) {
+            console.log(err)
+            res.redirect("/surveys")
+        } else {
+            res.render("surveys/edit", {survey: foundSurvey})
+        }
+    })
+    
+})
+
+// UPDATE - Survey Update Route
+router.put("/:id", function(req, res) {
+    // find and update survey
+    
+    Survey.findByIdAndUpdate(req.params.id, req.body.survey, function(err, updatedSurvey){
+        if(err) {
+            
+            res.redirect("/surveys");
+        } else {
+            res.redirect("/surveys/" + req.params.id); // we can use updatedSurvey._id
+        }
+    })
+})
+
+// DELETE - Survye Delete Route
+router.delete("/:id", function(req, res) {
+    Survey.findByIdAndRemove(req.params.id, function(err) {
+        if (err) {
+            console.log(err)
+            res.redirect("/surveys")
+        } else {
+            res.redirect("/surveys")
+        }
+    })
+})
+
 // Middleware
 
 function isLoggedIn(req, res, next) {

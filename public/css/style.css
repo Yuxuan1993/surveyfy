@@ -16,3 +16,7 @@ main {
  #btnRightSpacing {
      margin-right: 1em;
  }
+ 
+ #delete-inline {
+     display: inline;
+ }
