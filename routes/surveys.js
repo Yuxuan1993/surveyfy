@@ -19,7 +19,22 @@ router.get("/", isLoggedIn,function(req, res) {
 router.post("/", isLoggedIn, function(req, res) {
     var name = req.body.name
     var description = req.body.description
-    var newSurvey = {name: name, description: description}
+    var author = {
+        id: req.user._id,
+        username: req.user.username,
+        firstName: req.user.firstName
+    }
+    
+    
+    var newSurvey = {name: name, description: description, author: author}
+    
+    
+    
+    // newSurvey.author.id = req.user._id
+    // newSurvey.author.username = req.user.username
+    // newSurvey.author.firstName = req.user.firstName
+    
+    
     
     // Create a new survey and save
     Survey.create(newSurvey, function(error, newSurveyCreated) {
@@ -27,6 +42,7 @@ router.post("/", isLoggedIn, function(req, res) {
             console.log(error)
         } else {
             // redirecting to surveys
+            console.log(newSurveyCreated)
             res.redirect("/surveys")
         }
     })

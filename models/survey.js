@@ -4,6 +4,14 @@ var mongoose = require("mongoose")
 var surveySchema = new mongoose.Schema({
     name: String,
     description: String,
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }, 
+        username: String,
+        firstName: String
+    },
     questions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Question"
