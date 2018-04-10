@@ -47,7 +47,7 @@ router.post("/", isLoggedIn, function(req, res) {
     })
 })
 
-// EDIT - Question Route
+// EDIT - Question Route Edit
 router.get("/:question_id/edit", function(req, res){
     Question.findById(req.params.question_id, function(err, foundQuestion) {
         if (err) {
@@ -59,7 +59,7 @@ router.get("/:question_id/edit", function(req, res){
    
 });
 
-// UPDATE - Questin Route
+// UPDATE - Question Route Update
 router.put("/:question_id", function(req, res) {
     Question.findByIdAndUpdate(req.params.question_id, req.body.question, function(err, updatedQuestion){
       if(err){
@@ -68,6 +68,18 @@ router.put("/:question_id", function(req, res) {
           res.redirect("/surveys/" + req.params.id );
       }
    });
+})
+
+// DELETE - Question Route Delete
+router.delete("/:question_id", function(req, res) {
+    // Find ID and Delete the question_id
+    Question.findByIdAndRemove(req.params.question_id, function(err){
+        if (err) {
+            res.redirect("back")
+        } else {
+            res.redirect("/surveys/" + req.params.id)
+        }
+    })
 })
 
 
