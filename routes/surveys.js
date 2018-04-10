@@ -1,9 +1,10 @@
 var express = require("express")
 var router  = express.Router()
 var Survey  = require("../models/survey")
+var middleware = require("../middleware/index") // "../middleware" is fine coz of index.js has a special value for node 
 
 // Display - Route for Surveys
-router.get("/", isLoggedIn,function(req, res) {
+router.get("/", middleware.isLoggedIn,function(req, res) {
     // Get all surveys from database
     Survey.find({}, function(error, allSurveys) {
         if (error) {
@@ -16,7 +17,7 @@ router.get("/", isLoggedIn,function(req, res) {
 })
 
 // Create - Route for Creating Surveys
-router.post("/", isLoggedIn, function(req, res) {
+router.post("/", middleware.isLoggedIn, function(req, res) {
     var name = req.body.name
     var description = req.body.description
     var author = {
@@ -50,12 +51,12 @@ router.post("/", isLoggedIn, function(req, res) {
 })
 
 // Survey Form - Route for Survey form
-router.get("/new", isLoggedIn, function(req, res) {
+router.get("/new", middleware.isLoggedIn, function(req, res) {
     res.render("surveys/new")
 })
 
 // Show Survey - Route for displaying a individual Survey
-router.get("/:id", isLoggedIn, function(req, res) {
+router.get("/:id", middleware.isLoggedIn, function(req, res) {
     Survey.findById(req.params.id).populate("questions").exec( function(error, foundSurvey) {
         if (error) {
             console.log(error)
@@ -67,7 +68,7 @@ router.get("/:id", isLoggedIn, function(req, res) {
 })
 
 // EDIT - Survey Edit Route
-router.get("/:id/edit", checkSurveyOwnership, function(req, res) {
+router.get("/:id/edit", middleware.checkSurveyOwnership, function(req, res) {
 
     Survey.findById(req.params.id, function(err, foundSurvey) {
         res.render("surveys/edit", {survey: foundSurvey})
@@ -75,7 +76,7 @@ router.get("/:id/edit", checkSurveyOwnership, function(req, res) {
 })
 
 // UPDATE - Survey Update Route
-router.put("/:id", checkSurveyOwnership, function(req, res) {
+router.put("/:id", middleware.checkSurveyOwnership, function(req, res) {
     // find and update survey
     
     Survey.findByIdAndUpdate(req.params.id, req.body.survey, function(err, updatedSurvey){
@@ -89,7 +90,7 @@ router.put("/:id", checkSurveyOwnership, function(req, res) {
 })
 
 // DELETE - Survye Delete Route
-router.delete("/:id", checkSurveyOwnership, function(req, res) {
+router.delete("/:id", middleware.checkSurveyOwnership, function(req, res) {
     Survey.findByIdAndRemove(req.params.id, function(err) {
         if (err) {
             console.log(err)
@@ -100,43 +101,7 @@ router.delete("/:id", checkSurveyOwnership, function(req, res) {
     })
 })
 
-// Middleware for checking survey ownership
-function checkSurveyOwnership(req, res, next) {
-    if (req.isAuthenticated()) {
-        Survey.findById(req.params.id, function(err, foundSurvey) {
-        
-            if (err) {
-                console.log(err)
-                res.redirect("back")
-            }
-            else {
-                if(foundSurvey.author.id.equals(req.user._id)) {
-                    next() // moves and links to update or delete 
-                } else {
-                    
-                    res.redirect("back")
-                }
-                
-            }
-            
-                    
-            
-            
-        })
-    } else {
-        console.log("You need to be logged in!")
-        res.redirect("back")
-    }
-}
 
-// Middleware
 
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next()
-    } else {
-        res.redirect("/login")
-    }
-}
 
 module.exports = router

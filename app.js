@@ -8,7 +8,8 @@ var express         = require("express"),
     User            = require("./models/user"),
     Survey          = require("./models/survey"),
     Question        = require("./models/question"),
-    seedDB          = require("./seeds")
+    seedDB          = require("./seeds"),
+    flash           = require("connect-flash")
     
 // Routes access
 var questionRoutes   = require("./routes/questions"),
@@ -21,6 +22,9 @@ mongoose.connect("mongodb://localhost/surveyfy_db")
 
 // Providing or adding saved data.
 // seedDB()
+
+// To use flash for notifications
+app.use(flash())
 
 // Setting up ejs folder access
 app.set("view engine", "ejs")
