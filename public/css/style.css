@@ -20,3 +20,7 @@ main {
  #delete-inline {
      display: inline;
  }
+ 
+.btn-warning {
+    color: #fff;
+}

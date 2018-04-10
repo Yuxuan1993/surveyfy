@@ -1,0 +1,22 @@
+<% include ../partials/header %>
+<div class="row">
+  <div class="col-md-6 mx-auto">
+    <div class="card card-body">
+      <h3 class="text-left text-uppercase">Edit Comment </h3>
+      <br></br>
+      <form action="/surveys/<%= survey_id %>/questions/<%= question._id %>?_method=PUT" method="post">
+        <div class="form-group">
+          <label for="name">Question Title</label>
+          <input type="text" class="form-control" name="question[text]" value="<%= question.text %>" required>
+        </div>
+        
+        
+        <button type="submit" class="btn btn-primary float-right">Edit Question</button>
+        
+        <a class="btn btn-secondary float-left" href="/surveys">Go Back</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+<% include ../partials/footer %>

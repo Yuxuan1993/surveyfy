@@ -47,6 +47,29 @@ router.post("/", isLoggedIn, function(req, res) {
     })
 })
 
+// EDIT - Question Route
+router.get("/:question_id/edit", function(req, res){
+    Question.findById(req.params.question_id, function(err, foundQuestion) {
+        if (err) {
+            res.redirect("back")
+        } else {
+            res.render("questions/edit", {survey_id: req.params.id, question: foundQuestion})
+        }
+    })
+   
+});
+
+// UPDATE - Questin Route
+router.put("/:question_id", function(req, res) {
+    Question.findByIdAndUpdate(req.params.question_id, req.body.question, function(err, updatedQuestion){
+      if(err){
+          res.redirect("back");
+      } else {
+          res.redirect("/surveys/" + req.params.id );
+      }
+   });
+})
+
 
 // Middleware
 

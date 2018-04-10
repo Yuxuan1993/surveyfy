@@ -7,7 +7,7 @@
         <p><em>Created by - <%= survey.author.firstName %></em></p>
         <!--// currentUser is checking if some one is logged in before working on showing edit or delete-->
         <% if(currentUser && survey.author.id.equals(currentUser._id)) { %> <!--// setup for currentUser._id is in app.js-->
-            <p><a class="btn btn-primary float-right" href="/surveys/<%= survey._id %>/edit">Edit Survey</a></p>
+            <p><a class="btn btn-success float-right" href="/surveys/<%= survey._id %>/edit">Edit Survey</a></p>
             <form id="delete-inline" action="/surveys/<%= survey._id %>?_method=DELETE" method="post">
                 <button class="btn btn-danger float-right">Delete</button>
             </form>
@@ -22,14 +22,30 @@
             
             
             <br></br>
+            <hr></hr>
             <% survey.questions.forEach(function(question) { %>
                 <div class="row">
+                    
                     <p>
                         <strong>
                             <%= question.author.firstName %>  
                         </strong>
                         - <%= question.text %>
                     </p>
+                    
+                    <br></br>
+                    
+                    <div class="col-md-12">
+                        <p><a class="btn btn-success float-right" href="/surveys/<%= survey._id %>/questions/<%= question._id %>/edit">Edit Question</a></p>
+                    
+                    
+                    
+                    </div>
+                    
+                    
+                    
+                    
+                    
                 </div>
                 
                 
