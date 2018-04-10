@@ -48,7 +48,7 @@ router.post("/", isLoggedIn, function(req, res) {
 })
 
 // EDIT - Question Route Edit
-router.get("/:question_id/edit", function(req, res){
+router.get("/:question_id/edit", checkQuestionOwnership, function(req, res){
     Question.findById(req.params.question_id, function(err, foundQuestion) {
         if (err) {
             res.redirect("back")
@@ -60,7 +60,7 @@ router.get("/:question_id/edit", function(req, res){
 });
 
 // UPDATE - Question Route Update
-router.put("/:question_id", function(req, res) {
+router.put("/:question_id", checkQuestionOwnership, function(req, res) {
     Question.findByIdAndUpdate(req.params.question_id, req.body.question, function(err, updatedQuestion){
       if(err){
           res.redirect("back");
@@ -71,7 +71,7 @@ router.put("/:question_id", function(req, res) {
 })
 
 // DELETE - Question Route Delete
-router.delete("/:question_id", function(req, res) {
+router.delete("/:question_id", checkQuestionOwnership, function(req, res) {
     // Find ID and Delete the question_id
     Question.findByIdAndRemove(req.params.question_id, function(err){
         if (err) {
@@ -82,6 +82,35 @@ router.delete("/:question_id", function(req, res) {
     })
 })
 
+
+// Middleware for checking survye ownership
+function checkQuestionOwnership(req, res, next) {
+    if (req.isAuthenticated()) {
+        Question.findById(req.params.question_id, function(err, foundQuestion) {
+        
+            if (err) {
+                console.log(err)
+                res.redirect("back")
+            }
+            else {
+                if(foundQuestion.author.id.equals(req.user._id)) {
+                    next() // moves and links to update or delete 
+                } else {
+                    
+                    res.redirect("back")
+                }
+                
+            }
+            
+                    
+            
+            
+        })
+    } else {
+        console.log("You need to be logged in!")
+        res.redirect("back")
+    }
+}
 
 // Middleware
 

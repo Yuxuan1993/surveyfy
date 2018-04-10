@@ -36,11 +36,13 @@
                     <br></br>
                     
                     <div class="col-md-12">
-                        <p><a class="btn btn-success float-right" href="/surveys/<%= survey._id %>/questions/<%= question._id %>/edit">Edit Question</a></p>
-                    <br></br>
-                    <form action="/surveys/<%= survey._id %>/questions/<%= question._id %>?_method=DELETE" method="post">
-                        <button class="btn btn-danger float-right">Delete</button>
-                    </form>
+                        <% if(currentUser && question.author.id.equals(currentUser._id)) {%>
+                                <p><a class="btn btn-success float-right" href="/surveys/<%= survey._id %>/questions/<%= question._id %>/edit">Edit Question</a></p>
+                            <br></br>
+                            <form action="/surveys/<%= survey._id %>/questions/<%= question._id %>?_method=DELETE" method="post">
+                                <button class="btn btn-danger float-right">Delete</button>
+                            </form>
+                        <% } %>
                     
                     </div>
                     

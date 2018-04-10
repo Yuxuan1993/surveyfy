@@ -100,7 +100,7 @@ router.delete("/:id", checkSurveyOwnership, function(req, res) {
     })
 })
 
-// Middleware for checking survye ownership
+// Middleware for checking survey ownership
 function checkSurveyOwnership(req, res, next) {
     if (req.isAuthenticated()) {
         Survey.findById(req.params.id, function(err, foundSurvey) {
