@@ -40,6 +40,22 @@
   
 </div>
 
+<div class="container">
+  <% if (error && error.length >= 1) {%>
+    <div class="alert alert-danger" role="alert">
+    <%= error %>
+  </div>
+  <% } %>
+  
+  <% if (success && success.length >= 1) {%>
+    <div class="alert alert-success" role="alert">
+      <%= success %>
+    </div>
+   <% } %> 
+</div>
+
+
+
   
 <main>
 

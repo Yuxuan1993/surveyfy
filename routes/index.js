@@ -38,10 +38,12 @@ router.post("/register", function(req, res) {
     var newUser = new User({firstName: req.body.firstName, lastName: req.body.lastName, username: req.body.username})
     User.register(newUser, req.body.password, function(err, user) {
         if (err) {
-            console.log(err)
-            return res.render("register")
+            
+            req.flash("error", err.message);
+            return res.redirect("/register");
         } else { // authentication of the user
             passport.authenticate("local") (req, res, function(){
+                req.flash("success", "Welcome to Surveyfy, " + user.firstName + ".")
                 res.redirect("/surveys")
             })
         }
@@ -50,7 +52,7 @@ router.post("/register", function(req, res) {
 
 // Login Form
 router.get("/login", function(req, res) {
-    res.render("login", {message: req.flash("error")})
+    res.render("login")
 })
 
 // POST - Login
@@ -64,17 +66,10 @@ router.post("/login", passport.authenticate("local", {
 // Logout - route
 router.get("/logout", function(req, res) {
     req.logout()
+    req.flash("success", "Logged Out")
     res.redirect("/")
 })
 
-// Middleware
 
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next()
-    } else {
-        res.redirect("/login")
-    }
-}
 
 module.exports = router

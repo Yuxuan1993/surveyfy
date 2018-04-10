@@ -12,13 +12,14 @@ middlewareAuth.checkSurveyOwnership = function(req, res, next) {
         
             if (err) {
                 console.log(err)
+                req.flash("error", "Survey Doesn't Exist.")
                 res.redirect("back")
             }
             else {
                 if(foundSurvey.author.id.equals(req.user._id)) {
                     next() // moves and links to update or delete 
                 } else {
-                    
+                    req.flash("error", "Permission Denied.")
                     res.redirect("back")
                 }
                 
@@ -30,6 +31,7 @@ middlewareAuth.checkSurveyOwnership = function(req, res, next) {
         })
     } else {
         console.log("You need to be logged in!")
+        req.flash("error", "Please Login.")
         res.redirect("back")
     }
 }
@@ -49,7 +51,7 @@ middlewareAuth.checkQuestionOwnership = function(req, res, next) {
                 if(foundQuestion.author.id.equals(req.user._id)) {
                     next() // moves and links to update or delete 
                 } else {
-                    
+                    req.flash("error", "Permission Denied.")
                     res.redirect("back")
                 }
                 
@@ -61,6 +63,7 @@ middlewareAuth.checkQuestionOwnership = function(req, res, next) {
         })
     } else {
         console.log("You need to be logged in!")
+        req.flash("error", "Please Login.")
         res.redirect("back")
     }
 

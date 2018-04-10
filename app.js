@@ -54,6 +54,8 @@ passport.deserializeUser(User.deserializeUser()) // comes form passport-local-mo
 // currentUser to app.js
 app.use(function(req, res, next){
    res.locals.currentUser = req.user;
+   res.locals.error = req.flash("error") // error variable is available everywhere / global
+   res.locals.success = req.flash("success") // success varialble is global
    next();
 });
 

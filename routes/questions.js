@@ -27,6 +27,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
             // create new question
             Question.create(req.body.question, function(err, question) {
                 if (err) {
+                    req.flash("error", "The Create Operation not Successful.")
                     console.log(err)
                 } else {
                     // add new question to survey
@@ -41,6 +42,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
                     survey.questions.push(question)
                     survey.save()
                     // redirect to surveys page
+                    req.flash("success", "Successfully Saved.")
                     res.redirect("/surveys/" + survey._id)
                 }
             })
@@ -78,6 +80,7 @@ router.delete("/:question_id", middleware.checkQuestionOwnership, function(req, 
         if (err) {
             res.redirect("back")
         } else {
+            req.flash("success", "Question Successfully Deleted")
             res.redirect("/surveys/" + req.params.id)
         }
     })
