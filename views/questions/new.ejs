@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-md-6 mx-auto">
     <div class="card card-body">
-      <h3 class="text-left text-uppercase">Add Question to <%= survey.name %> </h3>
+      <h3 class="text-left text-uppercase"><em>Add Question to: </em><%= survey.name %> </h3>
       <br></br>
       <form action="/surveys/<%= survey._id %>/questions" method="post">
         <div class="form-group">
@@ -10,6 +10,25 @@
           <input type="text" class="form-control" name="question[text]" required>
         </div>
         
+        <br></br>
+        <br></br>
+        
+        <p>Options: </p>
+        
+        <div class="form-group">
+          <label for="option1">Answer 1</label>
+          <input type="text" class="form-control" name="option1">
+        </div>
+        
+        <div class="form-group">
+          <label for="option2">Answer 2</label>
+          <input type="text" class="form-control" name="option2">
+        </div>
+        
+        <div class="form-group">
+          <label for="option3">Answer 3</label>
+          <input type="text" class="form-control" name="option3">
+        </div>
         
         <button type="submit" class="btn btn-primary float-right">Create Question</button>
         

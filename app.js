@@ -45,6 +45,8 @@ app.use(require("express-session")({
     saveUninitialized: false
 }))
 
+app.locals.moment = require('moment') // Now moment is available for use in all of project's view files via the variable named moment
+
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new LocalStrategy(User.authenticate())) // comes form passport-local-mongoose

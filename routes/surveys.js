@@ -56,7 +56,7 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
 })
 
 // Show Survey - Route for displaying a individual Survey
-router.get("/:id", middleware.isLoggedIn, function(req, res) {
+router.get("/:id",  function(req, res) {
     Survey.findById(req.params.id).populate("questions").exec( function(error, foundSurvey) {
         if (error) {
             console.log(error)

@@ -4,7 +4,7 @@
     <div class="card card-body mb-2">
         <h1><%= survey.name %></h1>
         <p><%= survey.description %></p>
-        <p><em>Created by - <%= survey.author.firstName %></em></p>
+        <p><em>Created by - <%= survey.author.firstName %>, <%= moment(survey.createdAt).fromNow() %></em></p>
         <!--// currentUser is checking if some one is logged in before working on showing edit or delete-->
         <% if(currentUser && survey.author.id.equals(currentUser._id)) { %> <!--// setup for currentUser._id is in app.js-->
             <p><a class="btn btn-outline-success float-right" href="/surveys/<%= survey._id %>/edit">Edit Survey</a></p>
@@ -12,14 +12,17 @@
                 <button class="btn btn-outline-danger float-right">Delete</button>
             </form>
         <% } %>
+        
+        
     </div>
     
     <br></br>
         <div class="card card-body bg-light">
-            
+                
+                <% if(currentUser && survey.author.id.equals(currentUser._id)) {%>
                 <p><a class="btn btn-primary float-right" href="/surveys/<%= survey._id %>/questions/new">Add Question</a></p>
             
-            
+                <% } %>
             
             <br></br>
             <hr></hr>
@@ -30,7 +33,9 @@
                         <strong>
                             <%= question.author.firstName %>  
                         </strong>
-                        - <%= question.text %>
+                        : <%= question.text %>
+                        
+                    - <span class="text-right"><%= moment(question.createdAt).fromNow() %></span>
                     </p>
                     
                     <br></br>

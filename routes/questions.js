@@ -42,7 +42,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
                     survey.questions.push(question)
                     survey.save()
                     // redirect to surveys page
-                    req.flash("success", "Successfully Saved.")
+                    req.flash("success", "Successfully Created a Question.")
                     res.redirect("/surveys/" + survey._id)
                 }
             })
