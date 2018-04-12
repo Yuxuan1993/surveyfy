@@ -20,6 +20,8 @@ router.get("/", middleware.isLoggedIn,function(req, res) {
 router.post("/", middleware.isLoggedIn, function(req, res) {
     var name = req.body.name
     var description = req.body.description
+    var startdate = req.body.startdate
+    var enddate = req.body.enddate
     var author = {
         id: req.user._id,
         username: req.user.username,
@@ -27,7 +29,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
     }
     
     
-    var newSurvey = {name: name, description: description, author: author}
+    var newSurvey = {name: name, description: description, startdate, enddate, author: author}
     
     
     

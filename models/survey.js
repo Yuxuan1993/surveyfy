@@ -5,6 +5,8 @@ var surveySchema = new mongoose.Schema({
     name: String,
     description: String,
     createdAt: {type: Date, default: Date.now},
+    startdate: String,
+    enddate: String,
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,

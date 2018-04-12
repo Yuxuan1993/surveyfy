@@ -6,8 +6,13 @@
       <br></br>
       <form action="/surveys/<%= survey._id %>/questions" method="post">
         <div class="form-group">
-          <label for="name">Question Title</label>
+          <label for="name">Question Text</label>
           <input type="text" class="form-control" name="question[text]" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="name">Directions</label>
+          <input type="text" class="form-control" name="question[directions]" required>
         </div>
         
         <br></br>
